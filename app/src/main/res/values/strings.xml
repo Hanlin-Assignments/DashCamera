@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">DashCamera</string>
+    <!-- DB Keys -->
+    <string name="db_first_launch_complete_flag">FIRST_LAUNCH_FLAG</string>
+    <string name="current_recordings_preferences_key">com.opendashcam.CURRENT_RECORDINGS</string>
+    <string name="previous_recording_preferences_key">PREVIOUS_RECORDING</string>
+    <string name="current_recording_preferences_key">CURRENT_RECORDING</string>
+    <string name="pre_start_volume">PRE_START_VOLUME</string>
+
+    <!-- Welcome view -->
+    <string name="app_pitchline">Open Dash Cam is your\n eyewitness on the road.</string>
+    <string name="app_brief_description">While navigating with Google Maps or any other
+        application in the background, Open Dash Cam will record what happens on the road using
+        your phone camera.</string>
+
+    <string name="recording_automatic_heading">Recording starts automatically</string>
+    <string name="recording_automatic_desc">When you start the app, the red \"REC\" widget will
+        appear, indicating that video recording has started.\n\n
+        Google Maps will start in the background, so you can navigate while the dash cam is
+        recording.</string>
+
+    <string name="other_widgets_heading">\"REC\" opens app menu</string>
+    <string name="other_widgets_view_rec_desc">\"View recordings\" will show all videos
+        recorded</string>
+    <string name="other_widgets_save_rec_desc">Use \"Save recording\" if you captured an
+        important moment</string>
+    <string name="btn_start_driving">Start driving</string>
+
+    <!-- Save recording rootView -->
+    <string name="save_recording_success_msg">Current recording marked as starred.
+Starred recordings will not be deleted.</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="pref_title_rotate">Rotate recordings 90 degrees</string>
+    <string name="pref_description_rotate">Some devices record videos in the flipped mode.
+        If that is the case, enable this setting
+    </string>
+
+    <string name="pref_title_silent">Silent</string>
+    <string name="pref_description_silent">Puts your phone in silent mode while running to disable
+        camera sound when recording starts and stops
+    </string>
+
+    <string name="pref_title_start_maps_in_background">Start Google Maps in background</string>
+    <string name="pref_description_start_maps_in_background">Start Google Maps navigation when
+        you start the app
+    </string>
+
+    <string name="pref_delete_recordings">Delete all recordings</string>
+    <string name="pref_description_delete_recordings">Delete all recordings created by Open Dash
+        Cam
+    </string>
+    <string name="pref_delete_recordings_confirmation">All recordings deleted</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+
+    <string name="recordings_list_empty_message_title">No video recordings yet</string>
+    <string name="recordings_list_empty_message">New videos get recorded continuously every 45 seconds, so you should see one here soon.</string>
+
+    <string name="notification_title">Open Dash Cam recording</string>
+    <string name="notification_text">Video recording in progress</string>
+    <string name="touch_the_red_rec_widget_to_continue">Touch the red RECwidget to continue</string>
+</resources>
