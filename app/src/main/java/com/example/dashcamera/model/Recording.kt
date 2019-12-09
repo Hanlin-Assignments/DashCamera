@@ -18,10 +18,11 @@ class Recording(id: Int = 0, filePath: String?) {
      */
     private var id = id
     private var filePath: String? = filePath
-    private var filename: String? = File(filePath).name
-    private var dateSaved: String? = null
-    private var timeSaved: String? = null
-    private var dbHelper: DBHelper? = DBHelper.getInstance(DashCamera.appContext)
+    private var filename: String = File(filePath).name
+    private lateinit var dateSaved: String
+    private lateinit var timeSaved: String
+    private var dbHelper: DBHelper? = DBHelper.getInstance(DashCamera.getContext())
+    private var util:Util = Util()
 
     private val DATE_FORMAT = SimpleDateFormat("EEE MMM d")
     private val TIME_FORMAT = SimpleDateFormat("HH:mm:ss")
@@ -54,7 +55,7 @@ class Recording(id: Int = 0, filePath: String?) {
     }
 
     fun isStarred(): Boolean {
-        return dbHelper.isRecordingStarred(this)
+        return dbHelper!!.isRecordingStarred(this)
     }
 
     /**
@@ -65,7 +66,7 @@ class Recording(id: Int = 0, filePath: String?) {
      * @return True when marked as checked in DB, False otherwise
      */
     fun toggleStar(isChecked: Boolean): Boolean { //this item will be updated in the UI when asynctask will be finished
-        Util.updateStar(this)
+        util.updateStar(this)
         return true
     }
 

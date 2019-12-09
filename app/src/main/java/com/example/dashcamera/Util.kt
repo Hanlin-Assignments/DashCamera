@@ -44,7 +44,7 @@ class Util {
         removeNonEmptyDirectory(oldDirectory)
 
         //New directory
-        val appVideosFolder = getAppPrivateVideosFolder(DashCamera.appContext)
+        val appVideosFolder = getAppPrivateVideosFolder(DashCamera.getContext())
 
         if (appVideosFolder != null) {
             //create app-private folder if not exists
@@ -166,10 +166,10 @@ class Util {
      *
      * @param recording
      */
+
     fun updateStar(recording: Recording) {
         AsyncTaskCompat.executeParallel(UpdateStarTask(recording))
     }
-
 
     /**
      * Delete single recording from storage and SQLite
@@ -185,12 +185,12 @@ class Util {
         File(recording.getFilePath()).delete()
 
         //delete from db
-        DBHelper.getInstance(DashCamera.appContext).deleteRecording(
+        DBHelper.getInstance(DashCamera.getContext())!!.deleteRecording(
             Recording(recording.getFilePath())
         )
 
         //broadcast for updating videos list in UI
-        LocalBroadcastManager.getInstance(DashCamera.appContext).sendBroadcast(
+        LocalBroadcastManager.getInstance(DashCamera.getContext()).sendBroadcast(
             Intent(ACTION_UPDATE_RECORDINGS_LIST)
         )
     }
@@ -205,10 +205,10 @@ class Util {
      */
     fun insertNewRecording(recording: Recording?) {
         if (recording == null) return
-        DBHelper.getInstance(DashCamera.appContext).insertNewRecording(recording)
+        DBHelper.getInstance(DashCamera.getContext())!!.insertNewRecording(recording)
 
         //broadcast for updating videos list in UI
-        LocalBroadcastManager.getInstance(DashCamera.appContext).sendBroadcast(
+        LocalBroadcastManager.getInstance(DashCamera.getContext()).sendBroadcast(
             Intent(ACTION_UPDATE_RECORDINGS_LIST)
         )
     }
@@ -400,10 +400,10 @@ class Util {
     private inner class DeleteRecordingsTask : AsyncTask<Void, Void, Boolean>() {
 
         override fun doInBackground(vararg voids: Void): Boolean? {
-            val dbHelper = DBHelper.getInstance(DashCamera.appContext)
+            val dbHelper = DBHelper.getInstance(DashCamera.getContext())
 
             //select all saved recordings for removing files from storage
-            val recordingsList = dbHelper.selectAllRecordingsList()
+            val recordingsList = dbHelper!!.selectAllRecordingsList()
 
             //remove items from SQLite database
             val result = dbHelper.deleteAllRecordings()
@@ -413,7 +413,7 @@ class Util {
                 //remove files from storage
                 for (recording in recordingsList) {
                     videoFile =
-                        if (!TextUtils.isEmpty(recording.getFilePath())) File(recording.getFilePath()) else null
+                        if (!TextUtils.isEmpty(recording!!.getFilePath())) File(recording!!.getFilePath()) else null
                     videoFile?.delete()
                 }
             }
@@ -422,7 +422,7 @@ class Util {
         }
 
         override fun onPostExecute(aBoolean: Boolean) {
-            val context = DashCamera.appContext
+            val context = DashCamera.getContext()
             val res = context.getResources()
             this@Util.showToastLong(
                 context,
@@ -441,15 +441,15 @@ class Util {
         AsyncTask<Void, Void, Void>() {
 
         override fun doInBackground(vararg voids: Void): Void? {
-            val dbHelper = DBHelper.getInstance(DashCamera.appContext)
+            val dbHelper = DBHelper.getInstance(DashCamera.getContext())
             //insert or delete star
-            dbHelper.updateStar(mRecording)
+            dbHelper!!.updateStar(mRecording)
             return null
         }
 
         override fun onPostExecute(aVoid: Void) {
             //broadcast for updating videos list in UI
-            LocalBroadcastManager.getInstance(DashCamera.appContext).sendBroadcast(
+            LocalBroadcastManager.getInstance(DashCamera.getContext()).sendBroadcast(
                 Intent(this@Util.ACTION_UPDATE_RECORDINGS_LIST)
             )
         }

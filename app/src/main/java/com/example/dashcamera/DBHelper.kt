@@ -26,7 +26,7 @@ class DBHelper private constructor(context: Context) :
         oldVersion: Int,
         newVersion: Int
     ) { // Since we have only one version, upgrade policy is to simply to discard the data
-// and start over
+        // and start over
         DBRecordingsContract.onUpgrade(db, oldVersion, newVersion)
     }
 
@@ -43,9 +43,9 @@ class DBHelper private constructor(context: Context) :
      *
      * @return List of recordings
      */
-    fun selectAllRecordingsList(): ArrayList<Recording> {
-        val recordingsList: ArrayList<Recording> = ArrayList<Recording>()
-        var recording: Recording
+    override fun selectAllRecordingsList(): ArrayList<Recording?> {
+        val recordingsList: ArrayList<Recording?> = ArrayList<Recording?>()
+        var recording: Recording?
         val cursor: Cursor = DBRecordingsContract.queryAllRecordings(
             readableDatabase
         )
@@ -76,7 +76,7 @@ class DBHelper private constructor(context: Context) :
      * @param recording Recording
      * @return True - inserted successfully
      */
-    fun insertNewRecording(recording: Recording?): Boolean {
+    override fun insertNewRecording(recording: Recording?): Boolean {
         return if (DBRecordingsContract.isRecordingExists(
                 readableDatabase,
                 recording
@@ -90,7 +90,7 @@ class DBHelper private constructor(context: Context) :
      * @param recording Recording
      * @return True - deleted successfully
      */
-    fun deleteRecording(recording: Recording?): Boolean {
+    override fun deleteRecording(recording: Recording): Boolean {
         return DBRecordingsContract.deleteRecording(writableDatabase, recording)
     }
 
@@ -102,7 +102,7 @@ class DBHelper private constructor(context: Context) :
      *
      * @return True - deleted successfully
      */
-    fun deleteAllRecordings(): Boolean {
+    override fun deleteAllRecordings(): Boolean {
         return DBRecordingsContract.deleteAllRecordings(writableDatabase)
     }
 
@@ -112,7 +112,7 @@ class DBHelper private constructor(context: Context) :
      * @param recording Recording
      * @return True - starred
      */
-    fun isRecordingStarred(recording: Recording?): Boolean {
+    override fun isRecordingStarred(recording: Recording?): Boolean {
         return DBRecordingsContract.isRecordingStarred(readableDatabase, recording)
     }
 
@@ -122,7 +122,7 @@ class DBHelper private constructor(context: Context) :
      * @param recording Recording
      * @return True - star updated successfully
      */
-    fun updateStar(recording: Recording): Boolean {
+    override fun updateStar(recording: Recording): Boolean {
         val isStarred: Boolean = recording.isStarred()
         return if (!isStarred) { //insert start for recording
             DBRecordingsContract.insertStar(writableDatabase, recording)

@@ -8,7 +8,6 @@ import android.util.Log
 import com.example.dashcamera.model.Recording
 import java.lang.String
 
-
 /**
  * DB contract for recordings
  */
@@ -267,8 +266,8 @@ internal object DBRecordingsContract {
      * Table for starred recordings
      */
     private object StarredRecordingTable : BaseColumns {
-        private const val TABLE_NAME = "starred_recording"
-        private const val COLUMN_NAME_FILE = "file"
+        const val TABLE_NAME = "starred_recording"
+        const val COLUMN_NAME_FILE = "file"
         const val SQL_CREATE_TABLE = ("create table IF NOT EXISTS "
                 + TABLE_NAME
                 + "("
@@ -283,9 +282,9 @@ internal object DBRecordingsContract {
      * Table for recordings list
      */
     private object RecordingsTable : BaseColumns {
-        private const val TABLE_NAME = "recording"
-        private const val COLUMN_FILE_PATH = "file_path"
-        private const val COLUMN_FILE_NAME = "file_name"
+        const val TABLE_NAME = "recording"
+        const val COLUMN_FILE_PATH = "file_path"
+        const val COLUMN_FILE_NAME = "file_name"
         const val SQL_CREATE_TABLE = ("create table IF NOT EXISTS "
                 + TABLE_NAME
                 + "("
@@ -294,7 +293,7 @@ internal object DBRecordingsContract {
                 + COLUMN_FILE_NAME + " TEXT"
                 + ");")
         const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
-        private val QUERY_PROJECTION = arrayOf(
+        val QUERY_PROJECTION = arrayOf(
             BaseColumns._ID,
             COLUMN_FILE_PATH,
             COLUMN_FILE_NAME

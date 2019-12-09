@@ -9,7 +9,9 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
+import android.text.TextUtils
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import java.util.ArrayList
@@ -66,7 +68,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startApp() {
+        var util = Util()
+        if (!isEnoughStorage(util)){
 
+            util.showToastLong(this.applicationContext,
+                "Not enough storage to run the app (Need " + util.getQuota().toString()
+                + "MB). Clean up space for recordings."
+            )
+        }
+
+
+        //else {
+//            // Check if first launch => show tutorial
+//            // Access shared references file
+//            val sharedPref = applicationContext.getSharedPreferences(
+//                getString(R.string.db_first_launch_complete_flag),
+//                Context.MODE_PRIVATE
+//            )
+//
+//            val firstLaunchFlag = sharedPref.getString(
+//                getString(R.string.db_first_launch_complete_flag),
+//                "null"
+//            )
+//            // Otherwise
+//
+            // Launch navigation app, if settings say so
+            val settings = PreferenceManager.getDefaultSharedPreferences(this)
+            if (settings.getBoolean("start_maps_in_background", true)) {
+                launchNavigation()
+            }
+
+//            // Start recording video
+//            val videoIntent = Intent(applicationContext, BackgroundVideoRecorder::class.java)
+//            startService(videoIntent)
+//
+//            // Start rootView service (display the widgets)
+//            val i = Intent(applicationContext, WidgetService::class.java)
+//            startService(i)
+
+//        }
     }
 
     private fun checkDrawPermission(): Boolean {
@@ -185,18 +225,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun isEnoughStorage(): Boolean {
-//        val videosFolder = Util.getVideosDirectoryPath() ?: return false
-//
-//        val appVideosFolderSize = Util.getFolderSize(videosFolder)
-//        val storageFreeSize = Util.getFreeSpaceExternalStorage(videosFolder)
-//        //check enough space
-//        return if (storageFreeSize + appVideosFolderSize < Util.getQuota()) {
-//            false
-//        } else {
-//            true
-//        }
-//    }
+    /**
+     * Starts Google Maps in driving mode.
+     */
+    private fun launchNavigation() {
+        val googleMapsPackage = "com.google.android.apps.maps"
+
+        try {
+            val intent = packageManager.getLaunchIntentForPackage(googleMapsPackage)
+            intent!!.action = Intent.ACTION_VIEW
+            intent.data = Uri.parse("google.navigation:/?free=1&mode=d&entry=fnls")
+            startActivity(intent)
+        } catch (e: Exception) {
+            return
+        }
+
+    }
+
+    private fun isEnoughStorage(util: Util): Boolean {
+        val videosFolder = util.getVideosDirectoryPath() ?: return false
+
+        val appVideosFolderSize = util.getFolderSize(videosFolder)
+        val storageFreeSize = util.getFreeSpaceExternalStorage(videosFolder)
+        //check enough space
+        return storageFreeSize + appVideosFolderSize >= util.getQuota()
+    }
 
 }
 
