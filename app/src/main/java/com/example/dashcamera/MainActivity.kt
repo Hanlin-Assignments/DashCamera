@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings
-import android.text.TextUtils
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import java.util.ArrayList
@@ -76,37 +75,24 @@ class MainActivity : AppCompatActivity() {
                 + "MB). Clean up space for recordings."
             )
         }
-
-
-        //else {
-//            // Check if first launch => show tutorial
-//            // Access shared references file
-//            val sharedPref = applicationContext.getSharedPreferences(
-//                getString(R.string.db_first_launch_complete_flag),
-//                Context.MODE_PRIVATE
-//            )
-//
-//            val firstLaunchFlag = sharedPref.getString(
-//                getString(R.string.db_first_launch_complete_flag),
-//                "null"
-//            )
-//            // Otherwise
-//
             // Launch navigation app, if settings say so
             val settings = PreferenceManager.getDefaultSharedPreferences(this)
             if (settings.getBoolean("start_maps_in_background", true)) {
                 launchNavigation()
             }
 
-//            // Start recording video
-//            val videoIntent = Intent(applicationContext, BackgroundVideoRecorder::class.java)
-//            startService(videoIntent)
-//
-//            // Start rootView service (display the widgets)
+            // Start Sensor Detection for determining recording time
+
+
+            // Start recording video
+            val videoIntent = Intent(applicationContext, BackgroundVideoRecorder::class.java)
+            startService(videoIntent)
+
+
+            // Start rootView service (display the widgets)
 //            val i = Intent(applicationContext, WidgetService::class.java)
 //            startService(i)
 
-//        }
     }
 
     private fun checkDrawPermission(): Boolean {

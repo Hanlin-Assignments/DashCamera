@@ -1,6 +1,5 @@
 package com.example.dashcamera
 
-
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -127,9 +126,9 @@ class Util {
      * @param file The directory to calculate the size of
      * @return size of a directory in megabytes
      */
-    fun getFolderSize(file: File): Long {
+    fun getFolderSize(file: File?): Long {
         var size: Long = 0
-        if (file.isDirectory) {
+        if (file!!.isDirectory) {
             for (fileInDirectory in file.listFiles()!!) {
                 size += getFolderSize(fileInDirectory)
             }

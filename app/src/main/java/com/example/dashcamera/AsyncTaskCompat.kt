@@ -5,17 +5,6 @@ import android.os.AsyncTask
 /**
  * Helper for accessing features in [AsyncTask]
  * introduced after API level 4 in a backwards compatible fashion.
- *
- *
- * This class has been removed from support library version 26+
- *
- *
- * Created by Dmitriy V. Chernysh
- *
- *
- * https://instagr.am/mobiledevpro
- * https://github.com/dmitriy-chernysh
- * #MobileDevPro
  */
 
 object AsyncTaskCompat {
