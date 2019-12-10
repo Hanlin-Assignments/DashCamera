@@ -13,6 +13,7 @@ class WidgetService : Service() {
 
     private var overlayWidget: Widget? = null
     private var mWakeLock: PowerManager.WakeLock? = null
+    var util_ = Util()
 
     override fun onBind(intent: Intent): IBinder? {
         // Return the communication channel to the service.
@@ -22,9 +23,9 @@ class WidgetService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        var util_ = Util()
-
-        overlayWidget = Widget(this, getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+        println("Print: Here+")
+        overlayWidget = Widget(util_, this, getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+        println("Print:" + overlayWidget.toString())
         overlayWidget!!.show()
 
         // Start in foreground to avoid unexpected kill

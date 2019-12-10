@@ -37,15 +37,6 @@
             android:visibility="invisible"/>
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/settings_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/horizontal_widget_distance"
-            android:layout_marginTop="@dimen/vertical_widget_distance"
-            android:background="@android:color/transparent"
-            android:src="@drawable/settings_widget"/>
-
-        <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/stop_and_quit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

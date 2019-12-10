@@ -19,24 +19,22 @@ import com.example.dashcamera.ViewRecordingsActivity
 
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 
-class Widget(protected var service: Service, protected var windowManager: WindowManager) {
-    private val viewHolder: WidgetViewHolder
+class Widget(protected var util: Util, protected var service: Service, protected var windowManager: WindowManager) {
+    private val viewHolder: WidgetViewHolder = WidgetViewHolder(service)
 
     private var layoutParams: WindowManager.LayoutParams? = null
     private var gravity = Gravity.CENTER_VERTICAL or Gravity.START
     private var x = 0
     private var y = 0
 
-    var util_:Util = Util()
-
-    init {
-        this.viewHolder = WidgetViewHolder(service)
-    }
+    var util_:Util = util
 
     /**
      * Displays the rootView on screen
      */
     fun show() {
+        // Android Version >= Oreo has limited background activities.
+        // https://stackoverflow.com/questions/55074098/not-allowed-to-start-service-intent-app-in-on-background#
         var type = WindowManager.LayoutParams.TYPE_PHONE
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -48,8 +46,6 @@ class Widget(protected var service: Service, protected var windowManager: Window
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
-
-        // rootView.setImageResource(widgetDrawableResource);
 
         // Set position on screen
         layoutParams!!.gravity = this.gravity
@@ -77,7 +73,6 @@ class Widget(protected var service: Service, protected var windowManager: Window
         internal var viewRecView: View
         internal var saveRecView: View
         internal var recView: View
-        internal var settingsView: View
         internal var stopAndQuitView: View
         internal var layoutMenu: View
         internal var areSecondaryWidgetsShown = false
@@ -88,14 +83,12 @@ class Widget(protected var service: Service, protected var windowManager: Window
             rootViewMenu = LayoutInflater.from(context).inflate(R.layout.layout_widget_menu, null)
             viewRecView = rootViewMenu.findViewById(R.id.view_recordings_button)
             saveRecView = rootViewMenu.findViewById(R.id.save_recording_button)
-            settingsView = rootViewMenu.findViewById(R.id.settings_button)
             stopAndQuitView = rootViewMenu.findViewById(R.id.stop_and_quit_button)
             layoutMenu = rootViewMenu.findViewById(R.id.layout_menu)
 
             viewRecView.setOnClickListener(this)
             saveRecView.setOnClickListener(this)
             recView.setOnClickListener(this)
-            settingsView.setOnClickListener(this)
             stopAndQuitView.setOnClickListener(this)
             hideSecondaryWidgets()
         }
@@ -147,13 +140,7 @@ class Widget(protected var service: Service, protected var windowManager: Window
                     )
                 }
                 R.id.rec_button -> toggleSecondaryWidgets()
-//                R.id.settings_button -> {
-//                    val settingsIntent = Intent(service, SettingsActivity::class.java)
-//                    settingsIntent.flags = FLAG_ACTIVITY_NEW_TASK
-//                    service.startActivity(settingsIntent)
-//                    // hide secondary widgets
-//                    hideSecondaryWidgets()
-//                }
+
                 R.id.stop_and_quit_button -> {
                     // Stop video recording service
                     service.stopService(Intent(service, BackgroundVideoRecorder::class.java))
