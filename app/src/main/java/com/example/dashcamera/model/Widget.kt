@@ -1,3 +1,9 @@
+/**
+ *  File Name: Widget.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera.model
 
 import android.app.Service
@@ -19,6 +25,10 @@ import com.example.dashcamera.ViewRecordingsActivity
 
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 
+
+/**
+ * Widget Class which is used to show the overlay widgets
+ * */
 class Widget(protected var util: Util, protected var service: Service, protected var windowManager: WindowManager) {
     private val viewHolder: WidgetViewHolder = WidgetViewHolder(service)
 

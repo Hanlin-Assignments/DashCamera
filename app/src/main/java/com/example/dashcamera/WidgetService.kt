@@ -1,3 +1,9 @@
+/**
+ *  File Name: WidgetService.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.app.Service
@@ -10,10 +16,10 @@ import android.view.WindowManager
 import com.example.dashcamera.model.Widget
 
 class WidgetService : Service() {
-
+    // Declare variables
     private var overlayWidget: Widget? = null
     private var mWakeLock: PowerManager.WakeLock? = null
-    var util_ = Util()
+    private var util_ = Util()
 
     override fun onBind(intent: Intent): IBinder? {
         // Return the communication channel to the service.
@@ -23,9 +29,9 @@ class WidgetService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        println("Print: Here+")
+
+        // Create a widget with WindowManager
         overlayWidget = Widget(util_, this, getSystemService(Context.WINDOW_SERVICE) as WindowManager)
-        println("Print:" + overlayWidget.toString())
         overlayWidget!!.show()
 
         // Start in foreground to avoid unexpected kill
@@ -34,8 +40,8 @@ class WidgetService : Service() {
             util_.createStatusBarNotification(this)
         )
 
-        //Prevent going to sleep mode while service is working
-        //https://developer.android.com/reference/android/os/PowerManager.html
+        // Prevent going to sleep mode while service is working
+        // https://developer.android.com/reference/android/os/PowerManager.html
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         if (powerManager != null) {
             mWakeLock = powerManager.newWakeLock(

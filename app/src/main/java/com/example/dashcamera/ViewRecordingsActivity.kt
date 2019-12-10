@@ -1,3 +1,9 @@
+/**
+ *  File Name: ViewRecordingsActivity.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.app.Activity
@@ -21,6 +27,7 @@ import java.util.ArrayList
 
 class ViewRecordingsActivity : AppCompatActivity(), IViewRecordings.View {
 
+    // Declare variables
     private var mRecyclerView: RecyclerView? = null
     private var mAdapter: ViewRecordingsRecyclerViewAdapter? = null
     private var mLayoutListEmpty: View? = null
@@ -30,6 +37,7 @@ class ViewRecordingsActivity : AppCompatActivity(), IViewRecordings.View {
     override val activity: Activity
         get() = this
 
+    // Override methods
     override protected fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_recordings)
@@ -80,6 +88,7 @@ class ViewRecordingsActivity : AppCompatActivity(), IViewRecordings.View {
         val layoutManager = LinearLayoutManager(this)
         mRecyclerView!!.setLayoutManager(layoutManager)
 
+        // Inline function to initiate a Recycler Adapter
         mAdapter = ViewRecordingsRecyclerViewAdapter(
             this,
             object : ViewRecordingsRecyclerViewAdapter.RecordingListener{
@@ -87,6 +96,8 @@ class ViewRecordingsActivity : AppCompatActivity(), IViewRecordings.View {
                     mPresenter!!.onRecordingsItemPressed(recording)
                 }
             })
+
+        // Add the Adapter to the view
         mRecyclerView!!.setAdapter(mAdapter)
     }
 }

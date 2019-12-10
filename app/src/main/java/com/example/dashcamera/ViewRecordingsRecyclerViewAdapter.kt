@@ -1,3 +1,9 @@
+/**
+ *  File Name: ViewRecordingsRecyclerViewAdapter.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.content.Context
@@ -28,19 +34,24 @@ class ViewRecordingsRecyclerViewAdapter constructor(
     private val mContext: Context,
     private val mRecordingsListener: RecordingListener?
 ) : RecyclerView.Adapter<ViewRecordingsRecyclerViewAdapter.RecordingHolder>() {
+
+    // Declare variables
     private val mRecordingsList = ArrayList<Recording?>()
     private val mWidth: Int
     private val mHeight: Int
 
+    // Get Size of Recording List
     override fun getItemCount(): Int {
         return mRecordingsList.size
     }
 
+    // Implement onClick Listener
     interface RecordingListener {
         fun onItemClick(recording: Recording?)
     }
 
     init {
+        // Initiate Width and Height
         mWidth = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             150f,
@@ -126,6 +137,9 @@ class ViewRecordingsRecyclerViewAdapter constructor(
             .into(holder.thumbnail)
     }
 
+    /**
+     *  RecyclerView of Videos
+     * */
     inner class RecordingHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var thumbnail: ImageView
         var label: TextView

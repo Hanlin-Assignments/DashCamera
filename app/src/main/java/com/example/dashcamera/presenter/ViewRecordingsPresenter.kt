@@ -1,3 +1,9 @@
+/**
+ *  File Name: ViewRecordingsPresenter.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera.presenter
 
 import android.content.BroadcastReceiver
@@ -15,11 +21,14 @@ import com.example.dashcamera.model.Recording
 import java.io.File
 import java.util.ArrayList
 
-
+/**
+ * The implementation of the presenter class
+ * */
 class ViewRecordingsPresenter(private val mView:IViewRecordings.View):IViewRecordings.Presenter {
+    // Declare variables
     private var mUpdateListHandler: Handler? = Handler()
     private var mBroadcastReceiver: BroadcastReceiver? = null
-    var util_:Util = Util()
+    private var util_:Util = Util()
     /**
      * Populates array with Recording objects
      *
@@ -30,8 +39,8 @@ class ViewRecordingsPresenter(private val mView:IViewRecordings.View):IViewRecor
 
     override fun onStartView() {
         mView.updateRecordingsList(dataSet)
-     //receive broadcasts when videos list are changed in sqlite
-            registerBroadcastReceiver()
+        //receive broadcasts when videos list are changed in sqlite
+        registerBroadcastReceiver()
     }
 
     override fun onStopView() {
@@ -60,10 +69,9 @@ class ViewRecordingsPresenter(private val mView:IViewRecordings.View):IViewRecor
     }
 
     private fun stopUpdateList() {
-        if (mUpdateListHandler != null)
-        {
-        mUpdateListHandler!!.removeCallbacksAndMessages(this)
-        mUpdateListHandler = null
+        if (mUpdateListHandler != null) {
+            mUpdateListHandler!!.removeCallbacksAndMessages(this)
+            mUpdateListHandler = null
         }
     }
 

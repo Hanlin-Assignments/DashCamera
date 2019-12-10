@@ -1,3 +1,9 @@
+/**
+ *  File Name: AppCompatPreferenceActivity.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.content.res.Configuration
@@ -17,6 +23,7 @@ import androidx.appcompat.widget.Toolbar
  * to be used with AppCompat.
  */
 abstract class AppCompatPreferenceActivity : PreferenceActivity() {
+    // Create an AppCompatPreferenceActivity abstract class by overriding some methods from PreferenceActivity()
 
     private var mDelegate: AppCompatDelegate? = null
 

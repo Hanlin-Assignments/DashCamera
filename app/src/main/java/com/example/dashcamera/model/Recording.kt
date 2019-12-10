@@ -1,3 +1,9 @@
+/**
+ *  File Name: Recording.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera.model
 
 import android.text.TextUtils
@@ -8,7 +14,9 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * Recording class which is used to create recording instances
+ * */
 class Recording(id: Int = 0, filePath: String?) {
     /**
      * Constructor for selecting rows from SQLite

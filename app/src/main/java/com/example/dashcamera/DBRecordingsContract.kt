@@ -1,3 +1,9 @@
+/**
+ *  File Name: DBRecordingsContract.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.content.ContentValues
@@ -13,12 +19,15 @@ import java.lang.String
  */
 internal object DBRecordingsContract {
     fun onCreate(db: SQLiteDatabase) {
+        // Create tables
         db.execSQL(RecordingsTable.SQL_CREATE_TABLE)
         db.execSQL(StarredRecordingTable.SQL_CREATE_TABLE)
     }
 
     fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < 2 && newVersion > 2) { //create a new table for recordings list
+        // If there is an existing one
+        if (oldVersion < 2 && newVersion > 2) {
+            //create a new table for recordings list
             db.execSQL(RecordingsTable.SQL_CREATE_TABLE)
         } else {
             db.execSQL(RecordingsTable.SQL_DROP_TABLE)
@@ -34,6 +43,7 @@ internal object DBRecordingsContract {
      * @return Cursor
      */
     fun queryAllRecordings(db: SQLiteDatabase): Cursor {
+        // Query for all Recordings
         return db.query(
             RecordingsTable.TABLE_NAME,
             RecordingsTable.QUERY_PROJECTION,
@@ -53,6 +63,7 @@ internal object DBRecordingsContract {
      * @return rue - deleted successfully
      */
     fun deleteAllRecordings(db: SQLiteDatabase): Boolean { //delete recordings
+        // Delete all Recordings from database
         val result = db.delete(RecordingsTable.TABLE_NAME, null, null)
         //delete stars
         if (result > 0) {
@@ -70,12 +81,14 @@ internal object DBRecordingsContract {
     fun deleteRecording(
         db: SQLiteDatabase,
         recording: Recording
-    ): Boolean { //delete recordings
+    ): Boolean {
+        // Delete a Recording with query
         val result = db.delete(
             RecordingsTable.TABLE_NAME,
             RecordingsTable.COLUMN_FILE_NAME + " LIKE ?",
             arrayOf(recording.getFileName())
         )
+
         //delete stars if exist
         if (result > 0) {
             db.delete(
@@ -95,6 +108,7 @@ internal object DBRecordingsContract {
      * @return True -  inserted successfully
      */
     fun insertRecording(db: SQLiteDatabase, recording: Recording?): Boolean {
+        // Insert a Recording with query
         if (recording == null) return false
         var insertedRowId: Long = -1
         val cv = ContentValues()
@@ -128,6 +142,7 @@ internal object DBRecordingsContract {
      * @return True - starred successfully
      */
     fun insertStar(db: SQLiteDatabase, recording: Recording?): Boolean {
+        // Insert Star
         if (recording == null) return false
         var insertedRowId: Long = -1
         val cv = ContentValues()
@@ -160,6 +175,7 @@ internal object DBRecordingsContract {
      * @return True - deleted successfully
      */
     fun deleteStar(db: SQLiteDatabase, recording: Recording): Boolean {
+        // Delete Star
         var result: Long = 0
         db.beginTransaction()
         try {
@@ -189,6 +205,7 @@ internal object DBRecordingsContract {
      * @return True - exists
      */
     fun isRecordingExists(db: SQLiteDatabase, recording: Recording?): Boolean {
+        // Flag checks if the Recording exists
         if (recording == null) return false
         val cursor: Cursor?
         var rowCount = 0
@@ -226,6 +243,7 @@ internal object DBRecordingsContract {
      * @return True - starred
      */
     fun isRecordingStarred(db: SQLiteDatabase, recording: Recording?): Boolean {
+        // Flag checks if the Recording has been starred
         if (recording == null) return false
         val cursor: Cursor?
         var rowCount = 0
@@ -256,6 +274,7 @@ internal object DBRecordingsContract {
     }
 
     fun getRecordingFromCursor(cursor: Cursor?): Recording? {
+        // Get a Recording from Cursor (File)
         return if (cursor == null) null else Recording(
             cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)),
             cursor.getString(cursor.getColumnIndex(RecordingsTable.COLUMN_FILE_PATH))

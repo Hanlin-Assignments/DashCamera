@@ -1,3 +1,9 @@
+/**
+ *  File Name: DBHelper.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.content.Context
@@ -8,7 +14,9 @@ import android.util.Log
 import com.example.dashcamera.model.Recording
 import java.util.*
 
-
+/**
+ * DBHelp: Database handler that manipulates database by overriding the abstract class
+ * */
 class DBHelper private constructor(context: Context) :
     SQLiteOpenHelper(
         context,

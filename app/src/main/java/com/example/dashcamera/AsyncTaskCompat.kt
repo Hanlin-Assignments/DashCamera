@@ -1,3 +1,9 @@
+/**
+ *  File Name: AsyncTaskCompat.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.os.AsyncTask

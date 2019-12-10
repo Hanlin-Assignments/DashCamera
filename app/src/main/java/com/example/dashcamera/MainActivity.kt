@@ -1,3 +1,9 @@
+/**
+ *  File Name: MainActivity.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.Manifest
@@ -183,8 +189,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             launchNavigation()
         }
 
-        // Start Sensor Detection for determining recording time
-
         // computing sensor values
         gyroOrientation[0] = 0.0f
         gyroOrientation[1] = 0.0f
@@ -213,8 +217,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // analysing behavior every 2 sec
         fuseTimer.scheduleAtFixedRate(BehaviorAnalysis(), 0, 2000)
 
-        // Start recording video
+        // Start Sensor Detection for determining recording time
         if (unsafeScore > 0) {
+            // Start recording video
             val videoIntent = Intent(applicationContext, BackgroundVideoRecorder::class.java)
             startService(videoIntent)
         }
@@ -225,7 +230,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         //resetting the sensor values every 50 sec
         fuseTimer.scheduleAtFixedRate(ResetSensorValues(), 1000, 50000)
-
     }
 
     private fun checkDrawPermission(): Boolean {
@@ -613,8 +617,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             normValues[2] = gyroValues[2] / omegaMagnitude
         }
 
-        // Integrate around this axis with the angular speed by the timestep
-        // in order to get a delta rotation from this sample over the timestep
+        // Integrate around this axis with the angular speed by the timestamp
+        // in order to get a delta rotation from this sample over the timestamp
         // We will convert this axis-angle representation of the delta rotation
         // into a quaternion before turning it into the rotation matrix.
         val thetaOverTwo = omegaMagnitude * timeFactor
@@ -753,7 +757,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         internal var rateOverYaw = (finalOverYaw / count).toDouble()
 
         override fun run() {
-
             // Hardcode a threshold
             if (rateOverPitch < 0.04) {
                 if (xAccChange == true) {
@@ -798,7 +801,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     // sensor values computed for the last 30 sec
     private inner class ResetSensorValues : TimerTask() {
-
         override fun run() {
             finalOverYaw = finalOverYaw - getFinalOverYaw
             finalOverPitch = finalOverPitch - getFinalOverPitch

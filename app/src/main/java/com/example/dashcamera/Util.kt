@@ -1,3 +1,9 @@
+/**
+ *  File Name: Util.kt
+ *  Project Name: DashCamera
+ *  Copyright @ Hanlin Hu 2019
+ */
+
 package com.example.dashcamera
 
 import android.app.Notification
@@ -24,7 +30,9 @@ import androidx.core.os.EnvironmentCompat
 import java.io.File
 import java.lang.Double
 
-
+/**
+ *  Utility Class of App Context
+ * */
 class Util {
     var ACTION_UPDATE_RECORDINGS_LIST = "update.recordings.list"
     val FOREGROUND_NOTIFICATION_ID = 51288
@@ -50,18 +58,20 @@ class Util {
             if (!appVideosFolder.exists()) appVideosFolder.mkdir()
             return appVideosFolder
         }
-
         return null
     }
 
+    // Get Quota
     fun getQuota(): Int {
         return QUOTA
     }
 
+    // Get Quota Warning Threshold
     fun getQuotaWarningThreshold(): Int {
         return QUOTA_WARNING_THRESHOLD
     }
 
+    // Get Max Duration
     fun getMaxDuration(): Int {
         return MAX_DURATION
     }
@@ -85,11 +95,8 @@ class Util {
      */
     fun showToastLong(context: Context, msg: String) {
         val tag = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
-
         tag.show()
-
         object : CountDownTimer(9000, 1000) {
-
             override fun onTick(millisUntilFinished: Long) {
                 tag.show()
             }
@@ -97,7 +104,6 @@ class Util {
             override fun onFinish() {
                 tag.show()
             }
-
         }.start()
     }
 
@@ -298,6 +304,7 @@ class Util {
             .setSmallIcon(R.drawable.ic_videocam_red_128dp)
             .setAutoCancel(false)
 
+        // Special Setting for version greater than Oreo
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager != null) {
             val channel = NotificationChannel(
                 NOTIFICATIONS_CHANNEL_ID_MAIN_NOTIFICATIONS,
@@ -309,7 +316,6 @@ class Util {
             channel.setSound(null, null)
             notificationManager.createNotificationChannel(channel)
         }
-
         return notificationBuilder.build()
     }
 
@@ -359,7 +365,6 @@ class Util {
                 e
             )
         }
-
         return null
     }
 
@@ -453,6 +458,4 @@ class Util {
             )
         }
     }
-
-
 }
